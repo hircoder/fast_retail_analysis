@@ -1,9 +1,9 @@
 # fast_retail_analysis.py
-# This script implements the techincal coding assingment for intervew.
-
-# Dat3; 04/11/2024
+# This script implements the technical coding assignment for interview.
+# Date: 04/11/2024
 # Author: Hose I. Rad
 # ------------------------------------------------------------------------------
+
 
 # import necessary libraries
 import pandas as pd
@@ -122,10 +122,15 @@ agg.to_csv('output/aggregation.csv', index=False)
 # Step 5: compare w/ benchmark
 print("\nevaluating vs benchmark...")
 bench = pd.read_csv('disclosure.csv')
-print("Benchmark data sample:")
-print(bench.head())
-print("\nData types:")
-print(bench.dtypes)
+
+# try:
+#     bench = pd.read_csv('disclosure.csv')
+# except FileNotFoundError:
+#     print("Error: 'disclosure.csv' not found.")
+# print("Benchmark data sample:")
+# print(bench.head())
+# print("\nData types:")
+# print(bench.dtypes)
 
 # fix dates in quarter data
 bench['quarter'] = pd.to_datetime(bench['quarter'], format='%Y-%m')
