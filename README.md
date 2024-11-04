@@ -34,4 +34,4 @@ Files saved to `output/` directory:
 
 ## Usage
 ```bash
-python fast_reatil_analysis.py
+python fast_retail_analysis.py
