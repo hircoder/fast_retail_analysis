@@ -1,3 +1,11 @@
+# fast_retail_analysis.py
+# This script implements the techincal coding assingment for intervew.
+
+# Dat3; 04/11/2024
+# Author: Hose I. Rad
+# ------------------------------------------------------------------------------
+
+# import necessary libraries
 import pandas as pd
 import gzip
 import json
@@ -21,13 +29,13 @@ def load_file(path):
 
 df = load_file('raw_data.tsv.gz')
 
-# quick count check
+# quick count check to verify the number of transactions per year
 df['yr'] = df['date'].dt.year  
 cnts = df['yr'].value_counts().reset_index()
 cnts.columns = ['yr', 'n_trans']  # num of transactions
 cnts = cnts.sort_values('yr')
 
-print("\nquick check of transaction counts:")
+print("\ncheck of transaction counts:")
 print(cnts)
 
 # compare w/ expected nums
@@ -45,12 +53,11 @@ print(check)
 # Step 2: clean messy data 
 print("\ncleaning data...")
 clean = df.dropna(subset=['sales'])
-clean = clean[clean['sales'] <= 10_000_000]  # remove crazy high sales
+clean = clean[clean['sales'] <= 10_000_000]  # remove high sales outliers
 clean = clean.reset_index(drop=True)
 
 # Step 3: get Fast Retailing stores
 print("finding FR stores...")
-
 def clean_text(txt):
    # normalize store names
    txt = str(txt)
@@ -91,7 +98,7 @@ stores = fr_data[['brand', 'store_name']].drop_duplicates()
 stores = stores.sort_values(['brand', 'store_name'])
 stores.to_csv('output/brand_store_map.tsv', sep='\t', index=False)
 
-# Step 4: quarterly stuff
+# Step 4: quarterly data aggregation
 print("\naggregating by quarter...")
 
 def get_quarter(dt):
@@ -120,7 +127,7 @@ print(bench.head())
 print("\nData types:")
 print(bench.dtypes)
 
-# fix dates
+# fix dates in quarter data
 bench['quarter'] = pd.to_datetime(bench['quarter'], format='%Y-%m')
 print("\nBenchmark quarters:")
 print(bench['quarter'].dt.strftime('%Y-%m').unique())
@@ -198,7 +205,7 @@ else:
    else:
        print("not enough data for plot")
 
-# Step 6: normalized version (optional)
+# Step 6: normalized version
 print("\ndoing normalized version...")
 clean['quarter'] = clean['date'].apply(get_quarter)
 quarters = sorted(clean['quarter'].unique())
