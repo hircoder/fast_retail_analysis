@@ -1,5 +1,5 @@
 # Fast Retailing Data Analysis Script
-Quick analysis script to evaluate Fast Retailing (UNIQLO parent company) sales data against benchmark disclosures.
+Quick analysis script to analyze time-series data using dummy consumer purchase data.
 
 ## What it does
 - Loads and validates transaction data from 2018-2020
@@ -34,4 +34,4 @@ Files saved to `output/` directory:
 
 ## Usage
 ```bash
-python analyze_fr.py
+python fast_reatil_analysis.py
